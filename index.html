@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description"
+    content="Media Ajar Interaktif Sistem Digital — Konversi Bilangan, 2's Complement, Aritmatika Biner" />
+  <title>SisDigital — Media Ajar Interaktif</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/hp-style.css" />
+  <link rel="stylesheet" href="css/youtube-fullscreen.css" />
+</head>
+
+<body>
+
+  <!-- Cinematic Background Elements -->
+  <div class="cinematic-bg">
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    <div class="clouds"></div>
+  </div>
+
+  <!-- Sound Effects -->
+  <audio id="hp-sfx-hover" preload="auto">
+    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_3d1ec5dc81.mp3?filename=magic-dust-5864.mp3"
+      type="audio/mpeg">
+  </audio>
+  <audio id="hp-sfx-click" preload="auto">
+    <source
+      src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_79eff4c466.mp3?filename=magic-in-the-air-43177.mp3"
+      type="audio/mpeg">
+  </audio>
+
+  <!-- Theme Switcher Widget -->
+  <div class="hp-theme-switcher" id="hp-theme-switcher">
+    <span class="hp-theme-switcher-label">⚡ House</span>
+    <button title="Gryffindor" onclick="changeHouseTheme('theme-gryffindor')"
+      style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid #D3A625; background: radial-gradient(circle, #740001, #3a0000); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Blason_Gryffondor.svg" alt="Gryffindor"
+        style="width: 26px; height: 30px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));" />
+    </button>
+    <button title="Slytherin" onclick="changeHouseTheme('theme-slytherin')"
+      style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid #AAAAAA; background: radial-gradient(circle, #1A472A, #0a1f12); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/Blason_Serpentard.svg" alt="Slytherin"
+        style="width: 26px; height: 30px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));" />
+    </button>
+    <button title="Ravenclaw" onclick="changeHouseTheme('theme-ravenclaw')"
+      style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid #946B2D; background: radial-gradient(circle, #0E1A40, #04091a); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Blason_Serdaigle.svg" alt="Ravenclaw"
+        style="width: 26px; height: 30px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));" />
+    </button>
+    <button title="Hufflepuff" onclick="changeHouseTheme('theme-hufflepuff')"
+      style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid #FFDB00; background: radial-gradient(circle, #eab308, #694a00); cursor: pointer; transition: transform 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Blason_Poufsouffle.svg" alt="Hufflepuff"
+        style="width: 26px; height: 30px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.8));" />
+    </button>
+  </div>
+
+  <script>
+    function changeHouseTheme(themeClass) {
+      document.body.classList.remove('theme-gryffindor', 'theme-slytherin', 'theme-ravenclaw', 'theme-hufflepuff');
+      document.body.classList.add(themeClass);
+
+      // Animate buttons
+      document.querySelectorAll('.hp-theme-switcher button').forEach(btn => {
+        btn.style.transform = 'scale(1)';
+        btn.style.boxShadow = 'none';
+      });
+      event.target.style.transform = 'scale(1.2)';
+      event.target.style.boxShadow = '0 0 15px ' + event.target.style.borderColor;
+    }
+
+    // Magic Wand Particle Trail
+    let lastParticleTime = 0;
+    document.addEventListener('mousemove', (e) => {
+      if (!document.body.classList.contains('hp-theme-active')) return;
+
+      const now = Date.now();
+      if (now - lastParticleTime < 40) return; // Throttle particle creation
+      lastParticleTime = now;
+
+      const particle = document.createElement('div');
+      particle.className = 'magic-particle';
+
+      // Randomize size, spread, and drop distance
+      const size = Math.random() * 4 + 2;
+      const tx = (Math.random() - 0.5) * 60 + 'px';
+      const ty = (Math.random() * 50 + 20) + 'px';
+
+      particle.style.width = size + 'px';
+      particle.style.height = size + 'px';
+      particle.style.left = (e.clientX - size / 2 + 2) + 'px'; // +2 for wand tip offset
+      particle.style.top = (e.clientY - size / 2 + 2) + 'px';
+      particle.style.setProperty('--tx', tx);
+      particle.style.setProperty('--ty', ty);
+
+      document.body.appendChild(particle);
+
+      setTimeout(() => {
+        particle.remove();
+      }, 800);
+    });
+  </script>
+
+  <!-- Beranda (Harry Potter Theme) -->
+  <div id="beranda-overlay" class="hp-beranda">
+    <div class="hp-content">
+      <div class="hp-logo">⚡ Sistem Digital ⚡</div>
+      <h1 class="hp-title">EL - 2</h1>
+      <p class="hp-subtitle">Tugas Media Ajar Interaktif</p>
+
+      <div class="hp-info-card">
+        <div style="flex: 1;">
+          <div class="hp-info-row">
+            <span class="hp-info-label">Dosen Pengampu:</span>
+            <span class="hp-info-value">Dr. Swadexi Istiqphara, S.T., M.T.</span>
+          </div>
+          <div class="hp-info-row">
+            <span class="hp-info-label">Kelompok:</span>
+            <span class="hp-info-value">Kelompok 6</span>
+          </div>
+        </div>
+        <div style="flex: 1;">
+          <div class="hp-info-row">
+            <span class="hp-info-label">Anggota Kelompok:</span>
+            <span class="hp-info-value">
+              <ul>
+                <li>Tiwa Rafsanzani Arifin (125130108)</li>
+                <li>Rama Yudha Pratama (125130134)</li>
+                <li>Ibnu Nurzeha (124130025)</li>
+                <li>Faktur Rahman Yovindra (125130023)</li>
+              </ul>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <button class="hp-btn-mulai" onclick="startMagic()">
+        <span>✨ MULAI✨</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Animated Background Orbs -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+
+  <!-- App Shell: Sidebar + Main -->
+  <div class="app-layout">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a class="sidebar-brand" href="#">
+          <div class="sidebar-logo">⚡</div>
+          <div>
+            <div class="sidebar-title">SisDigital</div>
+            <div class="sidebar-subtitle">Media Ajar Interaktif</div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Built by app.js -->
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-footer-badge">
+          <span class="dot"></span>
+          <span>Semester Ganjil 2025/2026</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+
+      <!-- Sticky Header -->
+      <header class="content-header">
+        <div class="header-left">
+          <button class="mobile-menu-btn" onclick="toggleMobileSidebar()" aria-label="Menu">
+            <span>☰</span>
+          </button>
+          <nav class="breadcrumb" id="breadcrumb" aria-label="Navigasi">
+            <span class="breadcrumb-item">Sistem Digital</span>
+          </nav>
+        </div>
+        <div class="header-right">
+          <div class="header-badge">
+            <span class="dot"></span>
+            <span>Interaktif</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Scrollable Content Panel -->
+      <div class="content-body" id="content-body">
+        <!-- Rendered by JS -->
+        <div class="splash-screen">
+          <div class="splash-icon">⚡</div>
+          <h1>SisDigital</h1>
+          <p>Media Ajar Interaktif — Sistem Bilangan &amp; Aritmatika Biner</p>
+          <div class="splash-loading">
+            <div class="splash-bar"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- /app-layout -->
+
+  <!-- Scripts -->
+  <script src="js/minggu1.js"></script>
+  <script src="js/minggu2.js"></script>
+  <script src="js/minggu3.js"></script>
+  <script src="js/minggu4.js"></script>
+  <script src="js/minggu5.js"></script>
+  <script src="js/minggu6.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/youtube-fullscreen.js"></script>
+
+  <!-- Background Music -->
+  <audio id="hp-bgm" loop>
+    <!-- Using a reliable Harry Potter theme link from internet archive or myinstants -->
+    <source src="https://www.myinstants.com/media/sounds/harry-potter-theme-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function startMagic() {
+      // Automatically enter full screen seamlessly in the background
+      if (window.SisDigitalPlayer && typeof window.SisDigitalPlayer.enterFullscreen === 'function') {
+        window.SisDigitalPlayer.enterFullscreen();
+      }
+
+      // Play Audio
+      const bgm = document.getElementById('hp-bgm');
+      if (bgm) {
+        bgm.volume = 0.4;
+        bgm.play().catch(e => console.log("Audio play failed, user interaction needed:", e));
+      }
+
+      // Play SFX
+      const clickSfx = document.getElementById('hp-sfx-click');
+      if (clickSfx) {
+        clickSfx.volume = 0.8;
+        clickSfx.currentTime = 0;
+        clickSfx.play().catch(e => console.log(e));
+      }
+
+      // Flash effect
+      const flash = document.createElement('div');
+      flash.className = 'magic-flash';
+      document.body.appendChild(flash);
+
+      const overlay = document.getElementById('beranda-overlay');
+      overlay.style.transition = 'all 2s cubic-bezier(0.25, 1, 0.5, 1)';
+      overlay.style.opacity = '0';
+      overlay.style.transform = 'scale(1.5) translateZ(50px) rotate(5deg)';
+      overlay.style.filter = 'blur(20px) brightness(2)';
+
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        if (flash.parentNode) flash.remove();
+      }, 2000);
+
+      // Optionally add hp-theme class to main layout for magical components
+      document.querySelector('.app-layout').classList.add('hp-theme');
+      document.body.classList.add('hp-theme-active'); // Enable magical cursor & particles
+
+      // Initialize SFX for sidebar items
+      setTimeout(initMagicalSFX, 500);
+    }
+
+    function initMagicalSFX() {
+      const hoverSfx = document.getElementById('hp-sfx-hover');
+      const clickSfx = document.getElementById('hp-sfx-click');
+
+      // Add hover and click effects to all navigation items and buttons
+      const interactiveElements = document.querySelectorAll('.nav-item-header, .hp-theme-switcher button, .convert-btn, .step-tab, .hub-node');
+
+      interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if (hoverSfx) {
+            // Very subtle hover sound
+            hoverSfx.volume = 0.15;
+            hoverSfx.currentTime = 0;
+            hoverSfx.play().catch(e => { });
+          }
+        });
+
+        el.addEventListener('click', () => {
+          if (clickSfx) {
+            clickSfx.volume = 0.4;
+            clickSfx.currentTime = 0;
+            clickSfx.play().catch(e => { });
+          }
+        });
+      });
+    }
+  </script>
+
+</body>
+
+</html>

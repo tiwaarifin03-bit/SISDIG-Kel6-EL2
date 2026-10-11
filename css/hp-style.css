@@ -1,0 +1,674 @@
+/* ===== Harry Potter Theme Styles - FINAL BOSS EDITION ===== */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  /* Default: Hogwarts Gold/Dark */
+  --hp-primary: #d4af37;
+  --hp-primary-rgb: 212, 175, 55;
+  --hp-secondary: #f1c40f;
+  --hp-secondary-rgb: 241, 196, 15;
+  --hp-accent: #fcf6ba;
+  --hp-bg-dark: #0a0b10;
+  --hp-bg-light: #1a1c29;
+  --hp-grad-1: #bf953f;
+  --hp-grad-2: #fcf6ba;
+  --hp-grad-3: #b38728;
+}
+
+body.theme-gryffindor {
+  --hp-primary: #D3A625;
+  --hp-primary-rgb: 211, 166, 37;
+  --hp-secondary: #740001;
+  --hp-secondary-rgb: 116, 0, 1;
+  --hp-accent: #FFFFFF;
+  --hp-bg-dark: #1a0404;
+  --hp-bg-light: #2a0808;
+  --hp-grad-1: #740001;
+  --hp-grad-2: #ae0001;
+  --hp-grad-3: #5a0001;
+}
+
+body.theme-slytherin {
+  --hp-primary: #AAAAAA;
+  --hp-primary-rgb: 170, 170, 170;
+  --hp-secondary: #1A472A;
+  --hp-secondary-rgb: 26, 71, 42;
+  --hp-accent: #FFFFFF;
+  --hp-bg-dark: #050E09;
+  --hp-bg-light: #0A1C11;
+  --hp-grad-1: #1A472A;
+  --hp-grad-2: #2a623d;
+  --hp-grad-3: #11301b;
+}
+
+body.theme-ravenclaw {
+  --hp-primary: #946B2D;
+  --hp-primary-rgb: 148, 107, 45;
+  --hp-secondary: #0E1A40;
+  --hp-secondary-rgb: 14, 26, 64;
+  --hp-accent: #d4af37;
+  --hp-bg-dark: #030610;
+  --hp-bg-light: #070d20;
+  --hp-grad-1: #0E1A40;
+  --hp-grad-2: #222f5b;
+  --hp-grad-3: #0a132e;
+}
+
+body.theme-hufflepuff {
+  --hp-primary: #FFDB00;
+  --hp-primary-rgb: 255, 219, 0;
+  --hp-secondary: #eab308;
+  --hp-secondary-rgb: 234, 179, 8;
+  --hp-accent: #FFFFFF;
+  --hp-bg-dark: #0d0b02;
+  --hp-bg-light: #1a1705;
+  --hp-grad-1: #ca8a04;
+  --hp-grad-2: #facc15;
+  --hp-grad-3: #a16207;
+}
+
+/* --- Magical Cursor & Scrollbar --- */
+body.hp-theme-active {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M28 28 L8 8" stroke="%235C4033" stroke-width="4" stroke-linecap="round"/><path d="M8 8 L2 2" stroke="%238B5A2B" stroke-width="2" stroke-linecap="round"/><circle cx="2" cy="2" r="2" fill="%23fcf6ba" /></svg>') 2 2, auto !important;
+}
+
+/* Magic Dust Particle */
+.magic-particle {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  background: var(--hp-primary);
+  box-shadow: 0 0 10px var(--hp-secondary), 0 0 20px var(--hp-accent);
+  z-index: 10001;
+  animation: fallMagic 0.8s ease-out forwards;
+}
+
+@keyframes fallMagic {
+  0% { opacity: 1; transform: scale(1) translate(0, 0); }
+  100% { opacity: 0; transform: scale(0) translate(var(--tx), var(--ty)); }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--hp-bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--hp-primary), var(--hp-grad-3));
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--hp-grad-2), var(--hp-primary));
+  box-shadow: 0 0 10px var(--hp-primary);
+}
+
+/* --- Floating Magic Particles (Pseudo-elements) --- */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  background: radial-gradient(circle at 20% 30%, rgba(var(--hp-primary-rgb), 0.03) 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(var(--hp-primary-rgb), 0.05) 0%, transparent 50%);
+  z-index: 9998;
+  animation: breatheMagic 8s ease-in-out infinite alternate;
+}
+
+@keyframes breatheMagic {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+/* --- Beranda / Landing Page --- */
+.hp-beranda {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('../img/hogwarts_bg.jpg') center/cover no-repeat;
+  z-index: 9999;
+  display: flex;
+  align-items: center; /* Back to center */
+  justify-content: center;
+  overflow: hidden; /* Hide scrollbar entirely per user request */
+  padding: 20px;
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--hp-primary); /* Gold */
+  font-family: 'Playfair Display', serif;
+}
+.hp-beranda::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+  pointer-events: none;
+}
+
+.hp-content {
+  text-align: center;
+  max-width: 750px;
+  width: 100%;
+  margin: auto;
+  padding: 35px 40px;
+  background: rgba(10, 11, 16, 0.65);
+  border: 1px solid rgba(var(--hp-primary-rgb), 0.3);
+  border-radius: 20px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 
+              inset 0 0 30px rgba(var(--hp-primary-rgb), 0.15),
+              0 0 15px rgba(var(--hp-primary-rgb), 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  animation: floatMagic 7s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.hp-content::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg, transparent 0%, rgba(var(--hp-primary-rgb),0.1) 25%, transparent 50%);
+  animation: rotateGlow 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes rotateGlow {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes floatMagic {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(0.5deg); }
+}
+
+.hp-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  letter-spacing: 6px;
+  color: var(--hp-accent);
+  margin-bottom: 12px;
+  text-shadow: 0 0 15px rgba(var(--hp-secondary-rgb), 0.8), 0 0 30px rgba(var(--hp-secondary-rgb), 0.4);
+  position: relative;
+}
+
+.hp-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+  background: linear-gradient(to right, var(--hp-grad-1), var(--hp-grad-2), var(--hp-grad-3), var(--hp-grad-2), var(--hp-grad-1));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0px 4px 15px rgba(0,0,0,0.8);
+  animation: goldShine 4s linear infinite;
+}
+
+@keyframes goldShine {
+  to { background-position: 200% center; }
+}
+
+.hp-subtitle {
+  font-size: 1.15rem;
+  color: #dcdde1;
+  margin-bottom: 25px;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.hp-info-card {
+  background: linear-gradient(145deg, rgba(20,20,25,0.8), rgba(5,5,10,0.9));
+  padding: 20px 35px;
+  border-radius: 15px;
+  border: 1px solid rgba(var(--hp-primary-rgb), 0.2);
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: inset 0 2px 20px rgba(0,0,0,0.5);
+  transition: all 0.4s ease;
+}
+.hp-info-card:hover {
+  border-color: rgba(var(--hp-primary-rgb), 0.6);
+  box-shadow: inset 0 2px 20px rgba(0,0,0,0.5), 0 0 20px rgba(var(--hp-primary-rgb), 0.2);
+  transform: translateY(-3px);
+}
+
+.hp-info-row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.hp-info-row:last-child { margin-bottom: 0; }
+
+.hp-info-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--hp-grad-3);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 5px;
+}
+
+.hp-info-value {
+  font-size: 1rem;
+  color: #f5f6fa;
+  font-weight: 500;
+}
+
+.hp-info-value ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+}
+
+.hp-info-value ul li {
+  padding: 5px 0;
+  position: relative;
+  padding-left: 24px;
+  transition: transform 0.2s;
+}
+.hp-info-value ul li:hover {
+  transform: translateX(5px);
+  color: var(--hp-secondary);
+}
+
+.hp-info-value ul li::before {
+  content: '⚡';
+  position: absolute;
+  left: 0;
+  color: var(--hp-secondary);
+  font-size: 0.85rem;
+  text-shadow: 0 0 5px var(--hp-secondary);
+}
+
+.hp-btn-mulai {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #0a0b10;
+  background: linear-gradient(to right, var(--hp-grad-1), var(--hp-grad-2), var(--hp-grad-3));
+  padding: 12px 40px;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 5px 20px rgba(var(--hp-primary-rgb), 0.4), inset 0 0 10px rgba(255,255,255,0.5);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 2px;
+}
+
+.hp-btn-mulai:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(var(--hp-primary-rgb), 0.7), inset 0 0 15px rgba(255,255,255,0.8);
+  color: #000;
+  border-color: #fff;
+}
+
+.hp-btn-mulai::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.9), rgba(255,255,255,0));
+  transform: skewX(-25deg);
+  animation: wandShine 2.5s infinite;
+}
+
+@keyframes wandShine {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+/* ===== Harry Potter specific overrides for the inner content ===== */
+
+/* Base container modifications */
+.hp-theme {
+  animation: fadeMagicIn 0.8s ease-out;
+}
+@keyframes fadeMagicIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Glass Cards - Enhanced */
+.hp-theme .glass-card {
+  background: linear-gradient(135deg, rgba(13, 16, 25, 0.85), rgba(8, 10, 15, 0.95));
+  border: 2px solid var(--hp-primary);
+  outline: 1px solid var(--hp-primary);
+  outline-offset: -6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 0 20px rgba(var(--hp-primary-rgb), 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+.hp-theme .glass-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--hp-primary-rgb),0.5), transparent);
+}
+.hp-theme .glass-card:hover {
+  outline-color: var(--hp-secondary);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 25px rgba(var(--hp-primary-rgb), 0.2), inset 0 0 30px rgba(var(--hp-primary-rgb), 0.15);
+  transform: translateY(-4px);
+}
+
+.hp-theme .glass-card-title {
+  font-family: 'Cinzel', serif;
+  color: var(--hp-accent);
+  display: block;
+  line-height: 1.4;
+  padding-bottom: 5px;
+  font-size: 1.3rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  border-bottom: 1px solid rgba(var(--hp-primary-rgb),0.2);
+  margin-bottom: 20px;
+}
+
+/* Interactive Buttons */
+.hp-theme .convert-btn {
+  background: linear-gradient(to right, var(--hp-bg-light), var(--hp-bg-dark)); 
+  border: 1px solid var(--hp-primary);
+  color: var(--hp-secondary);
+  box-shadow: 0 4px 15px rgba(var(--hp-primary-rgb), 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hp-theme .convert-btn:hover {
+  background: linear-gradient(to right, var(--hp-grad-1), var(--hp-grad-3));
+  box-shadow: 0 6px 20px rgba(var(--hp-primary-rgb), 0.3), 0 0 15px rgba(var(--hp-secondary-rgb), 0.6);
+  transform: translateY(-2px) scale(1.02);
+  color: #fff;
+}
+
+/* Week Hero Banner */
+.hp-theme .week-hero {
+  background: radial-gradient(circle at top right, rgba(var(--hp-secondary-rgb), 0.15), transparent 60%),
+              linear-gradient(135deg, rgba(10, 12, 18, 0.95), rgba(5, 7, 12, 0.98));
+  border: 2px solid var(--hp-primary);
+  outline: 1px solid var(--hp-primary);
+  outline-offset: -8px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.8), inset 0 0 50px rgba(0,0,0,0.9), inset 0 0 20px rgba(var(--hp-primary-rgb), 0.1);
+  position: relative;
+  border-radius: 12px;
+}
+.hp-theme .week-hero::before {
+  content: '';
+  position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(var(--hp-primary-rgb),0.1) 0%, transparent 60%);
+  animation: heroBreathe 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes heroBreathe {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+.hp-theme .week-hero h1 {
+  font-family: 'Cinzel', serif;
+  background: linear-gradient(to right, var(--hp-grad-1), var(--hp-grad-2), var(--hp-grad-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  line-height: 1.3;
+  padding-bottom: 5px;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+}
+.hp-theme .week-hero p {
+  font-size: 1rem;
+  color: #cfd0d4;
+  line-height: 1.7;
+}
+
+/* Bit Cells (Simulators) - Magical Look */
+.hp-theme .bit-cell {
+  background: rgba(10, 12, 20, 0.8);
+  border: 1px solid rgba(var(--hp-primary-rgb), 0.3);
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hp-theme .bit-cell:hover {
+  transform: translateY(-2px) scale(1.05);
+  border-color: var(--hp-primary);
+  box-shadow: 0 5px 15px rgba(var(--hp-primary-rgb), 0.2), inset 0 0 15px rgba(var(--hp-primary-rgb), 0.1);
+}
+.hp-theme .bit-cell.bit-one {
+  background: rgba(var(--hp-primary-rgb), 0.15);
+  color: var(--hp-accent);
+  border-color: var(--hp-primary);
+  box-shadow: 0 0 15px rgba(var(--hp-primary-rgb), 0.3), inset 0 0 10px rgba(var(--hp-primary-rgb), 0.2);
+  text-shadow: 0 0 5px var(--hp-accent);
+}
+.hp-theme .bit-cell.kmap-val-1 {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+  border-color: #22c55e;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+}
+.hp-theme .bit-cell.kmap-val-X {
+  color: #f87171;
+  text-shadow: 0 0 5px #f87171;
+}
+
+/* Cheat Table */
+.hp-theme .cheat-table {
+  border: 1px solid rgba(var(--hp-primary-rgb), 0.2);
+  background: rgba(10, 12, 18, 0.6);
+  border-radius: 10px;
+}
+.hp-theme .cheat-table thead th {
+  background: rgba(var(--hp-primary-rgb), 0.1) !important;
+  color: var(--hp-primary) !important;
+  border-bottom: 1px solid rgba(var(--hp-primary-rgb), 0.3);
+  font-family: 'Cinzel', serif;
+}
+.hp-theme .cheat-table tbody td {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  font-family: var(--font-mono);
+}
+.hp-theme .cheat-table tbody tr:hover {
+  background: rgba(var(--hp-primary-rgb), 0.05);
+}
+
+@media (max-width: 600px) {
+  .hp-info-card { flex-direction: column; gap: 15px; padding: 15px; }
+  .hp-title { font-size: 2rem; }
+  .hp-content { padding: 25px 20px; }
+}
+
+@media (max-height: 700px) {
+  .hp-content { transform: scale(0.85); transform-origin: center center; }
+}
+@media (max-height: 600px) {
+  .hp-content { transform: scale(0.75); transform-origin: center center; }
+}
+
+/* Flash effect when magic starts */
+.magic-flash {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: #fff;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  animation: whiteFlash 1.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+}
+
+@keyframes whiteFlash {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Enhanced interactive hover effects for sidebar & content in HP Theme */
+.hp-theme .sidebar {
+  background: rgba(10, 11, 16, 0.95) !important;
+  border-right: 1px solid rgba(var(--hp-primary-rgb), 0.3) !important;
+  box-shadow: inset -5px 0 15px rgba(0,0,0,0.5);
+}
+
+.hp-theme .nav-item-header {
+  border-left: 3px solid transparent;
+}
+
+.hp-theme .nav-item-header:hover {
+  background: rgba(var(--hp-primary-rgb), 0.1) !important;
+  border-left-color: var(--hp-primary) !important;
+  box-shadow: inset 4px 0 10px rgba(var(--hp-primary-rgb), 0.15);
+}
+
+.hp-theme .nav-item.active > .nav-item-header {
+  background: rgba(var(--hp-primary-rgb), 0.15) !important;
+  border-left-color: var(--hp-primary) !important;
+  box-shadow: inset 5px 0 15px rgba(var(--hp-primary-rgb), 0.25);
+}
+
+.hp-theme .nav-item.active > .nav-item-header .nav-item-icon {
+  background: linear-gradient(135deg, var(--hp-grad-1), var(--hp-grad-3)) !important;
+  box-shadow: 0 0 12px var(--hp-primary) !important;
+  color: #111 !important;
+}
+
+.hp-theme .nav-item-text {
+  color: #ccc !important;
+}
+
+.hp-theme .nav-item.active > .nav-item-header .nav-item-text,
+.hp-theme .nav-item-header:hover .nav-item-text {
+  color: var(--hp-accent) !important;
+  text-shadow: 0 0 8px rgba(var(--hp-primary-rgb), 0.5);
+}
+
+.hp-theme .content-header {
+  background: rgba(10, 11, 16, 0.85) !important;
+  border-bottom: 1px solid rgba(var(--hp-primary-rgb), 0.2) !important;
+}
+
+.hp-theme .breadcrumb-item {
+  color: var(--hp-primary) !important;
+  text-shadow: 0 0 5px rgba(var(--hp-primary-rgb), 0.3);
+}
+
+.hp-theme .header-badge {
+  background: rgba(var(--hp-primary-rgb), 0.1) !important;
+  border-color: var(--hp-primary) !important;
+  color: var(--hp-accent) !important;
+  box-shadow: 0 0 10px rgba(var(--hp-primary-rgb), 0.2);
+}
+
+.hp-theme .header-badge .dot {
+  background: var(--hp-primary) !important;
+  box-shadow: 0 0 8px var(--hp-primary);
+}
+
+/* =========================================================================
+   CINEMATIC BACKGROUND & WORLD-CLASS PARALLAX EFFECTS
+   ========================================================================= */
+.cinematic-bg {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0; pointer-events: none; overflow: hidden;
+  background: radial-gradient(circle at 50% 100%, #111424 0%, #030408 100%);
+  opacity: 0; transition: opacity 3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+body.hp-theme-active .cinematic-bg { opacity: 1; }
+
+.cinematic-bg .stars, .cinematic-bg .twinkling, .cinematic-bg .clouds {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 100%; display: block;
+}
+
+.cinematic-bg .twinkling {
+  background: transparent url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Snowflakes_pattern.png/640px-Snowflakes_pattern.png') repeat top center;
+  z-index: 1; animation: move-twink-back 150s linear infinite;
+  opacity: 0.15; mix-blend-mode: color-dodge; filter: sepia(1) hue-rotate(15deg) saturate(4) blur(1px);
+}
+
+.cinematic-bg .clouds {
+  background: transparent url('https://raw.githubusercontent.com/danielstuart14/CSS_FOG_ANIMATION/master/fog1.png') repeat top center;
+  z-index: 2; animation: move-clouds-back 200s linear infinite;
+  opacity: 0.25; mix-blend-mode: screen; filter: sepia(1) hue-rotate(10deg) saturate(2);
+}
+
+@keyframes move-twink-back { from {background-position:0 0;} to {background-position:-10000px 5000px;} }
+@keyframes move-clouds-back { from {background-position:0 0;} to {background-position:10000px 0;} }
+
+body.hp-theme-active, .hp-theme.app-layout, .hp-theme .main-content {
+  background: transparent !important;
+}
+
+/* =========================================================================
+   BREATHTAKING MAGICAL GLASSMORPHISM FOR CARDS
+   ========================================================================= */
+.hp-theme .glass-card {
+  background: linear-gradient(145deg, rgba(13, 16, 25, 0.35), rgba(5, 7, 10, 0.7));
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(var(--hp-primary-rgb), 0.15);
+  border-top: 1px solid rgba(var(--hp-primary-rgb), 0.5);
+  border-left: 1px solid rgba(var(--hp-primary-rgb), 0.3);
+  box-shadow: 0 15px 45px rgba(0,0,0,0.9), inset 0 0 50px rgba(var(--hp-primary-rgb), 0.05);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative; overflow: hidden;
+}
+.hp-theme .glass-card::before {
+  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: conic-gradient(from 0deg, transparent 0%, rgba(var(--hp-primary-rgb),0.2) 25%, transparent 50%);
+  animation: rotateGlow 12s linear infinite; opacity: 0; transition: opacity 0.5s ease;
+  pointer-events: none; mix-blend-mode: screen;
+}
+.hp-theme .glass-card::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: inset 0 0 20px rgba(var(--hp-primary-rgb), 0);
+  transition: box-shadow 0.5s ease; pointer-events: none;
+}
+.hp-theme .glass-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(var(--hp-primary-rgb), 0.8);
+  box-shadow: 0 25px 55px rgba(0,0,0,1), 0 0 30px rgba(var(--hp-primary-rgb), 0.2);
+}
+.hp-theme .glass-card:hover::before { opacity: 1; }
+.hp-theme .glass-card:hover::after { box-shadow: inset 0 0 30px rgba(var(--hp-primary-rgb), 0.2); }
+
+/* Golden shimmers on titles */
+.hp-theme .glass-card-title, .hp-theme .sidebar-title {
+  position: relative; display: inline-block;
+  background: linear-gradient(to right, var(--hp-grad-1), var(--hp-accent), var(--hp-grad-3), var(--hp-grad-1));
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShine 5s linear infinite;
+}
+
+/* Ultra-premium Week Hero Banner */
+.hp-theme .week-hero {
+  background: radial-gradient(circle at 80% 20%, rgba(var(--hp-primary-rgb), 0.15), transparent 70%),
+              linear-gradient(135deg, rgba(8, 10, 16, 0.6), rgba(3, 4, 8, 0.85));
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(var(--hp-primary-rgb), 0.3);
+  border-top: 2px solid rgba(var(--hp-primary-rgb), 0.6);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.9), inset 0 0 60px rgba(0,0,0,0.5), inset 0 0 20px rgba(var(--hp-primary-rgb), 0.15);
+}
+.hp-theme .week-hero h1 {
+  text-shadow: 0 5px 25px rgba(var(--hp-primary-rgb), 0.6);
+  letter-spacing: 2px;
+}
